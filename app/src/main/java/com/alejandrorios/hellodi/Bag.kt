@@ -1,16 +1,12 @@
 package com.alejandrorios.hellodi
 
-import dagger.Module
-import dagger.Provides
+import org.rewedigital.katana.Module
+import org.rewedigital.katana.dsl.compact.singleton
 
 /**
  * Created by alejandrorios on 2019-09-14
  */
 // Module
-@Module
-class Bag {
-    @Provides
-    fun sayHelloDagger2(): Info {
-        return Info("Hello Dagger 2")
-    }
+val bag = Module {
+    singleton { Info("Hello Katana") }
 }

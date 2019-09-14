@@ -1,22 +1,22 @@
 package com.alejandrorios.hellodi
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
-import javax.inject.Inject
+import org.rewedigital.katana.Component
 
 class MainActivity : AppCompatActivity() {
 
+    // Component
+    private val component = Component(modules = listOf(bag))
+
     // Retrieve Dependencies
-    @Inject
-    lateinit var info: Info
+    private val magicBox: Info by component.inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // Bind dependency
-        DaggerMagicBox.create().poke(this)
-        text_view.text = info.text
+        text_view.text = magicBox.text
     }
 }
