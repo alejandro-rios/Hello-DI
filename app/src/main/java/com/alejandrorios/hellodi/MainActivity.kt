@@ -3,20 +3,27 @@ package com.alejandrorios.hellodi
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_main.*
-import javax.inject.Inject
+import org.koin.android.ext.android.inject
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.context.startKoin
 
 class MainActivity : AppCompatActivity() {
 
     // Retrieve Dependencies
-    @Inject
-    lateinit var info: Info
+    private val magicBox: Info by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // Bind dependency
-        DaggerMagicBox.create().poke(this)
-        text_view.text = info.text
+        /// Bind with our activity
+        startKoin {
+            // Android context
+            androidContext(this@MainActivity)
+            // modules
+            modules(bag)
+        }
+
+        text_view.text = magicBox.text
     }
 }
